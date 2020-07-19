@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img src='#' class='img-fluid' id="modalImmagineProgramma"></img>
+                <img src='#' alt='modalImmagineProgramma' class='img-fluid' id="modalImmagineProgramma"></img>
 
                 <p id="modalSerieProgramma"></p>
                 <span><p id="modalNumeroStagioneProgramma"></p> <p id="modalNumeroPuntataProgramma"></p></span>
@@ -41,7 +41,7 @@
     <div class="jumbotron">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <img src="{{URL::to('/')}}/img/logo.png" alt="Logo guida tv" class="img-fluid mb-3" style="max-width: 200px">
+                <img src="{{URL::to('/')}}/img/logo.png" alt="Logo guida tv" class="img-fluid mb-3" style="max-width: 200px" />
                 <h1>La guida TV per eccellenza</h1>
                 <p class="lead">Made with <i class="fal fa-heart" style="color: red"></i> by D'Orazio Alessandro</p>
 
@@ -118,7 +118,7 @@
             $("#palinsesto_row").html('');
                 $.get('{{URL::to('/')}}/api/canali/' + canale_id + '/palinsesto', function(data, status) {
                     data.forEach(function(programma) {
-                        $("#palinsesto_row").append("<div class='col-md-4' onclick='apriDettaglioProgramma(" + programma.id + ")'><img src='" + programma.immagine + "' class='img-fluid'></><p class='mb-0 font-weight-bolder'>" + programma.nome + "</p><p class='lead small'>" + moment(programma.pivot.ora_inizio, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm') + "</p></div>");
+                        $("#palinsesto_row").append("<div class='col-md-4' onclick='apriDettaglioProgramma(" + programma.id + ")'><img src='" + programma.immagine + "' class='img-fluid' alt='immagine programma' /></><p class='mb-0 font-weight-bolder'>" + programma.nome + "</p><p class='lead small'>" + moment(programma.pivot.ora_inizio, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY HH:mm') + "</p></div>");
                     });
                 });
             }
