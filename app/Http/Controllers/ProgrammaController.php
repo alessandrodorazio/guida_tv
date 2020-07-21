@@ -6,6 +6,7 @@ use App\Programma;
 use App\Serie;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProgrammaController extends Controller
 {
@@ -33,6 +34,18 @@ class ProgrammaController extends Controller
     {
         //input: nome, tipologia, descrizione, immagine, link_approfondimento, numero_stagione, numero_puntata, genere_id, serie_id
 
+        $validatedData = Validator::make($request->all(), [
+            'nome' => 'required',
+            'tipologia' => 'required',
+            'descrizione' => 'required',
+            'immagine' => 'required',
+            'link_approfondimento' => 'required'
+        ]);
+
+        if($validatedData->fails()){
+            return response()->json(['message' => 'Campi mancanti'], 422);
+        }
+        
         $nome = $request->nome;
         $tipologia = $request->tipologia;
         $descrizione = $request->descrizione;
@@ -76,8 +89,9 @@ class ProgrammaController extends Controller
         {
             $programma->numero_stagione = $numero_stagione;
             $programma->numero_puntata = $numero_puntata;
-            //TODO controllo se esiste quella serie
-            $programma->serie_id = $serie->id;
+            if($serie) {
+                $programma->serie_id = $serie->id;
+            }
         }
 
 
@@ -95,6 +109,19 @@ class ProgrammaController extends Controller
     //solo admin
     public function update(Request $request, $sid, $id)
     {
+
+        $validatedData = Validator::make($request->all(), [
+            'nome' => 'required',
+            'tipologia' => 'required',
+            'descrizione' => 'required',
+            'immagine' => 'required',
+            'link_approfondimento' => 'required'
+        ]);
+
+        if($validatedData->fails()){
+            return response()->json(['message' => 'Campi mancanti'], 422);
+        }
+
         $programma = Programma::findOrFail($id);  
         
         $nome = $request->nome;
@@ -103,7 +130,6 @@ class ProgrammaController extends Controller
         $immagine = $request->immagine;
         $link_approfondimento = $request->link_approfondimento;
 
-        //check se esiste il genere
         $genere_id = $request->genere_id;
 
         if($tipologia == 2)
@@ -132,8 +158,10 @@ class ProgrammaController extends Controller
         {
             $programma->numero_stagione = $numero_stagione;
             $programma->numero_puntata = $numero_puntata;
-            //TODO controllo se esiste quella serie
-            $programma->serie_id = $serie->id;
+            //controllo se esiste quella serie
+            if($serie) {
+                $programma->serie_id = $serie->id;
+            }
         }
 
 

@@ -6,6 +6,7 @@ use App\Canale;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Validator;
 
 class CanaleController extends Controller
 {
@@ -20,7 +21,14 @@ class CanaleController extends Controller
     //solo admin
     public function store(Request $request, $sid)
     {
-        //TODO validazione
+        $validatedData = Validator::make($request->all(), [
+            'nome' => 'required',
+        ]);
+
+        if($validatedData->fails()){
+            return response()->json(['message' => 'Campi mancanti'], 422);
+        }
+    
         $nome = $request->nome;
 
         $canale = new Canale;
@@ -37,7 +45,14 @@ class CanaleController extends Controller
     //solo admin
     public function update(Request $request, $sid, $id)
     {
-        //TODO validazione
+        $validatedData = Validator::make($request->all(), [
+            'nome' => 'required',
+        ]);
+
+        if($validatedData->fails()){
+            return response()->json(['message' => 'Campi mancanti'], 422);
+        }
+            
         $nome = $request->nome;
 
         $canale = Canale::findOrFail($id);

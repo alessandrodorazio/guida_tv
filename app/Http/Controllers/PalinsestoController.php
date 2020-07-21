@@ -73,7 +73,6 @@ class PalinsestoController extends Controller
     }
 
     //palinsesto di tutti i canali per la data {data}
-    //TODO vedere da specifica quali informazioni devono essere ritornate
     public function dataPersonalizzata($data)
     {
         //check se data valida
