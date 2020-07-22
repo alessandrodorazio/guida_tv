@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <div class="modal fade" id="apriDettaglioProgramma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="apriDettaglioProgramma" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -19,10 +19,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img src='#' alt='modalImmagineProgramma' class='img-fluid' id="modalImmagineProgramma"></img>
+                <img src='#' alt='modalImmagineProgramma' class='img-fluid' id="modalImmagineProgramma" />
 
                 <p id="modalSerieProgramma"></p>
-                <span><p id="modalNumeroStagioneProgramma"></p> <p id="modalNumeroPuntataProgramma"></p></span>
+                <p><span id="modalNumeroStagioneProgramma"></span> <span id="modalNumeroPuntataProgramma"></span></p>
                 <p id="modalTipologiaProgramma"></p>
                 <p id="modalDescrizioneProgramma"></p>
                 <p id="modalLinkApprofondimentoProgramma"></p>
@@ -64,7 +64,7 @@
         </div>
     </div>
     
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script></body>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/locale/it.min.js"></script>
@@ -92,23 +92,59 @@
                 $("#modalNomeProgramma").html(data.nome);
                 $("#modalTipologiaProgramma").html(data.tipologia==1?'Programma singolo':'Programma ricorrente');
 
-                if(data.descrizione)
-                    {$("#modalDescrizioneProgramma").html(data.descrizione);}
-                if(data.link_approfondimento)
-                    {$("#modalLinkApprofondimentoProgramma").html('<a href="' + data.link_approfondimento + '">Link approfondimento</a>');}
-                if(data.numero_stagione)
+                if(data.descrizione) 
+                {
+                    $("#modalDescrizioneProgramma").html(data.descrizione);
+                } else {
+                    $("#modalDescrizioneProgramma").html('');
+                }
+
+                if(data.link_approfondimento) 
+                {
+                    $("#modalLinkApprofondimentoProgramma").html('<a href="' + data.link_approfondimento + '">Link approfondimento</a>');
+                } else {
+                    $("#modalLinkApprofondimentoProgramma").html('');
+                }
+
+                if(data.numero_stagione) 
+                {
                     $("#modalNumeroStagioneProgramma").html('Stagione ' + data.numero_stagione);
-                if(data.numero_puntata)
+                }
+                else {
+                    $("#modalNumeroStagioneProgramma").html('');
+                }
+
+                if(data.numero_puntata) 
+                {
                     $("#modalNumeroPuntataProgramma").html('Puntata ' + data.numero_puntata);
+                } else {
+                    $("#modalNumeroPuntataProgramma").html('');
+                }
+
                 if(data.genere_nome)
+                {
                     $("#modalGenereProgramma").html('Genere: ' + data.genere_nome);
+                } else {
+                    $("#modalGenereProgramma").html('');
+                }
+
                 if(data.serie_nome)
+                {
                     $("#modalSerieProgramma").html('Serie: ' + data.serie_nome);
-                if(data.immagine)
+                } else {
+                    $("#modalSerieProgramma").html('');
+                }
+
+                if(data.immagine) {
                     $("#modalImmagineProgramma").attr('src', data.immagine);
+                } else {
+                    $("#modalImmagineProgramma").attr('src', '#');
+                }
                 if(data.palinsesto) {
                     oraInizio = moment(data.palinsesto[0].pivot.ora_inizio, 'YYYY-MM-DD HH:mm:ss');
                     $("#modalPalinsestoProgramma").html(data.palinsesto[0].nome + ', il giorno ' + oraInizio.format('DD/MM/YYYY') + ' alle ore ' + oraInizio.format('HH:mm'));
+                } else {
+                    $("#modalPalinsestoProgramma").html('');
                 }
             });
             $('#apriDettaglioProgramma').modal('show');
@@ -123,4 +159,5 @@
                 });
             }
     </script>
+    </body>
 </html>
