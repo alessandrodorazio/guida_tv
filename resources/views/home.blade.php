@@ -19,16 +19,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                <p class="mb-0"><small id="modalGenereProgramma"></small></p>
+                <p class="mb-0" id="modalSerieProgramma"></p>
+                <p class="mb-0"><span id="modalNumeroStagioneProgramma"></span> <span id="modalNumeroPuntataProgramma"></span></p>
                 <img src='#' alt='modalImmagineProgramma' class='img-fluid' id="modalImmagineProgramma" />
-
-                <p id="modalSerieProgramma"></p>
-                <p><span id="modalNumeroStagioneProgramma"></span> <span id="modalNumeroPuntataProgramma"></span></p>
-                <p id="modalTipologiaProgramma"></p>
-                <p id="modalDescrizioneProgramma"></p>
+                <p class="lead small mt-2" id="modalDescrizioneProgramma"></p>
                 <p id="modalLinkApprofondimentoProgramma"></p>
-                
-                <p id="modalGenereProgramma"></p>
-                
                 <p id="modalPalinsestoProgramma"></p>
             </div>
             <div class="modal-footer">
@@ -84,13 +80,9 @@
 
 
         function apriDettaglioProgramma(id) {
-            console.log(id);
             $.get('{{URL::to('/')}}/api/programmi/' + id, function(data, status) {
 
-                console.log(data);
-
                 $("#modalNomeProgramma").html(data.nome);
-                $("#modalTipologiaProgramma").html(data.tipologia==1?'Programma singolo':'Programma ricorrente');
 
                 if(data.descrizione) 
                 {
@@ -142,7 +134,7 @@
                 }
                 if(data.palinsesto) {
                     oraInizio = moment(data.palinsesto[0].pivot.ora_inizio, 'YYYY-MM-DD HH:mm:ss');
-                    $("#modalPalinsestoProgramma").html(data.palinsesto[0].nome + ', il giorno ' + oraInizio.format('DD/MM/YYYY') + ' alle ore ' + oraInizio.format('HH:mm'));
+                    $("#modalPalinsestoProgramma").html('<i class="fad fa-tv-retro text-danger fa-fw"></i>&nbsp;' + data.palinsesto[0].nome + ', il giorno ' + oraInizio.format('DD/MM/YYYY') + ' alle ore ' + oraInizio.format('HH:mm'));
                 } else {
                     $("#modalPalinsestoProgramma").html('');
                 }

@@ -56,6 +56,10 @@ class AuthController extends Controller
         $password = $request->password;
         $email = $request->email;
 
+        if(User::where('email', $email)->count() > 0) {
+            return response()->json(['message' => 'Esiste già un utente con questa email!'], 422);
+        }
+
         $token = Str::random(80);
 
         $user = new User;
